@@ -1,0 +1,35 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.registerRoutes = void 0;
+const express_1 = require("express");
+const health_route_1 = require("./health.route");
+const auth_routes_1 = require("../modules/auth/auth.routes");
+const affiliate_routes_1 = require("../modules/affiliates/affiliate.routes");
+const link_routes_1 = require("../modules/links/link.routes");
+const order_routes_1 = require("../modules/orders/order.routes");
+const commission_routes_1 = require("../modules/commissions/commission.routes");
+const payment_routes_1 = require("../modules/payments/payment.routes");
+const setting_routes_1 = require("../modules/settings/setting.routes");
+const opencart_routes_1 = require("../modules/integrations/opencart/opencart.routes");
+const analytics_routes_1 = require("../modules/analytics/analytics.routes");
+const admin_routes_1 = require("../modules/admin/admin.routes");
+const notification_routes_1 = require("../modules/notifications/notification.routes");
+const API_PREFIX = '/api/v1';
+const registerRoutes = (app) => {
+    const router = (0, express_1.Router)();
+    router.use('/health', health_route_1.healthRouter);
+    router.use('/auth', auth_routes_1.authRouter);
+    router.use('/admin/auth', admin_routes_1.adminAuthRouter);
+    router.use('/notifications', notification_routes_1.notificationRouter);
+    router.use('/affiliates', affiliate_routes_1.affiliatesRouter);
+    router.use('/links', link_routes_1.linksRouter);
+    router.use('/orders', order_routes_1.ordersRouter);
+    router.use('/commissions', commission_routes_1.commissionsRouter);
+    router.use('/payments', payment_routes_1.paymentsRouter);
+    router.use('/settings', setting_routes_1.settingsRouter);
+    router.use('/analytics', analytics_routes_1.analyticsRouter);
+    router.use('/integrations/opencart', opencart_routes_1.opencartRouter);
+    app.use(API_PREFIX, router);
+};
+exports.registerRoutes = registerRoutes;
+//# sourceMappingURL=index.js.map
