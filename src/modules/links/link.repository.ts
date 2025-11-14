@@ -33,6 +33,11 @@ export const createLink = async (payload: CreateLinkInput): Promise<AffiliateLin
   return rows[0];
 };
 
+export const findById = async (id: number): Promise<AffiliateLink | null> => {
+  const [rows] = await execute<AffiliateLink[]>(`${baseSelect} WHERE l.id = ? LIMIT 1`, [id]);
+  return rows[0] ?? null;
+};
+
 export const listLinks = async (query: Partial<Record<string, string>>) => {
   const { page, pageSize } = parsePagination(query);
   const where: string[] = [];
@@ -85,5 +90,32 @@ export const updateLinkStatus = async (
   const [rows] = await execute<AffiliateLink[]>(`${baseSelect} WHERE l.id = ?`, [id]);
 
   return rows[0] ?? null;
+};
+
+export const incrementVisit = async (linkId: number): Promise<void> => {
+  await execute(
+    `
+    INSERT INTO link_metrics (affiliate_link_id, timeframe, clicks)
+    VALUES (?, 'all_time', 1)
+    ON DUPLICATE KEY UPDATE
+      clicks = clicks + 1,
+      updated_at = NOW()
+  `,
+    [linkId],
+  );
+};
+
+export const incrementOrderAttribution = async (linkId: number, amount: number): Promise<void> => {
+  await execute(
+    `
+    INSERT INTO link_metrics (affiliate_link_id, timeframe, orders, earnings)
+    VALUES (?, 'all_time', 1, ?)
+    ON DUPLICATE KEY UPDATE
+      orders = orders + 1,
+      earnings = earnings + VALUES(earnings),
+      updated_at = NOW()
+  `,
+    [linkId, amount],
+  );
 };
 

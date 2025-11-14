@@ -24,3 +24,18 @@ export const statusUpdateSchema = Joi.object({
   confirmationDate: Joi.date().iso().optional().allow(null),
 });
 
+export const programStatusSchema = Joi.object({
+  timestamp: Joi.number().integer().optional(),
+}).unknown(true);
+
+export const linkLookupSchema = Joi.object({
+  linkId: Joi.number().integer().required(),
+}).unknown(true);
+
+export const visitPayloadSchema = Joi.object({
+  linkId: Joi.number().integer().required(),
+  url: Joi.string().uri().optional(),
+  userAgent: Joi.string().optional(),
+  ipAddress: Joi.string().optional(),
+}).unknown(true);
+

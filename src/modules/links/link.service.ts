@@ -53,3 +53,16 @@ export const updateLinkStatus = async (
   return null;
 };
 
+export const getLinkById = async (id: number): Promise<AffiliateLinkWithTracking | null> => {
+  const link = await repository.findById(id);
+  return link ? withTrackingUrl(link) : null;
+};
+
+export const recordVisit = async (linkId: number): Promise<void> => {
+  await repository.incrementVisit(linkId);
+};
+
+export const recordOrderAttribution = async (linkId: number, amount: number): Promise<void> => {
+  await repository.incrementOrderAttribution(linkId, amount);
+};
+

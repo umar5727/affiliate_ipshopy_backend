@@ -27,7 +27,7 @@ exports.env = {
         port: parseInt(ensure(process.env.MYSQL_PORT, 'MYSQL_PORT', '3306'), 10),
         user: ensure(process.env.MYSQL_USER, 'MYSQL_USER', 'root'),
         password: ensure(process.env.MYSQL_PASSWORD, 'MYSQL_PASSWORD', ''),
-        database: ensure(process.env.MYSQL_DATABASE, 'MYSQL_DATABASE', 'affiliates_ipshopy'),
+        database: ensure(process.env.MYSQL_DATABASE, 'MYSQL_DATABASE', 'ipshopy2_affiliates'),
         connectionLimit: parseInt(ensure(process.env.MYSQL_CONNECTION_LIMIT, 'MYSQL_CONNECTION_LIMIT', '10'), 10),
     },
     jwt: {
